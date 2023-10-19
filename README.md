@@ -1,2 +1,2 @@
 # web-vending-machine
-with flask
+with flask, jquery, bootstrap
