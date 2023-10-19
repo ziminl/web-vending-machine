@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link href="{{ url_for('static', filename='css/simple-sidebar.css') }}" rel="stylesheet">
+
+  <script>
+            function logout_button() {
+            Swal.fire({
+                title: '로그아웃', /*상단 타이틀*/
+                text: '정말로 로그아웃하시겠습니까?', /*내용*/
+                icon: 'success', /*아이콘 타입*/
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonColor: '#009900',
+                confirmButtonText: '확인', /*확인버튼 클가*/
+                cancelButtonText: '취소'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = '/logout';
+              }
+            })
+          }
+
+          function cancel_button() {
+            Swal.fire({
+                title: '변경 취소', /*상단 타이틀*/
+                text: '정말로 변경 내용을 삭제하시겠습니까?', /*내용*/
+                icon: 'warning', /*아이콘 타입*/
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonColor: '#009900',
+                confirmButtonText: '확인', /*확인버튼 클가*/
+                cancelButtonText: '취소'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                location.reload();
+              }
+            })
+          }
+
+          function manage(){
+            if (form.joinch.value == "" || form.roleid.value == "" || form.infoch.value == "" || form.chargech.value == "" || form.buych.value == ""){
+                Swal.fire(
+                '저장 불가',
+                '명령어 채널 / 역할 ID는 빈칸일 수 없습니다.',
+                'error'
+                );
+            }
+            else{
+                Swal.fire({
+                    title: '저장하시겠습니까?',
+                    text: "기존 설정은 모두 삭제됩니다!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    cancelButtonColor: '#d33',
+                    confirmButtonColor: '#009900'
+                    }).then((result) => {
+                        if (result.isConfirmed){
+                            $.ajax({
+                                url: "/setting",
+                                type: "post",
+                                data: $("form").serialize(),
+                            }).done(function(data) {
+                                if (data == "ok"){
+                                    Swal.fire({
+                                    title : '저장되었습니다!',
+                                    text : '입력하신 데이터가 저장되었습니다.',
+                                    icon : "success"
+                                    });
+                                }else{
+                                    Swal.fire(
+                                    '저장 실패',
+                                    data,
+                                    'error'
+                                    );
+                                }
+                            });
+                        }
+                    })
+            }
+        }
+
+  </script>
+
+  <title>Sky VEND βetq</title>
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Sky VEND βetq</div>
+      <div class="list-group list-group-flush">
+        <b><a href="/setting" class="list-group-item list-group-item-action bg-light">기본 설정</a></b>
+        <a href="/manageuser" class="list-group-item list-group-item-action bg-light">유저 관리</a>
+        <a href="/manageprod" class="list-group-item list-group-item-action bg-light">제품 관리</a>
+        <a href="/license" class="list-group-item list-group-item-action bg-light">라이센스 관리</a>
+        <b><a href="https://discord.gg/RMWNHEDmGD" class="btn btn-primary btn-block">Sky VEND βetq 디스코드</a></b>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">메뉴</button>&nbsp;&nbsp;
+        <button class="btn btn-danger" onclick="logout_button()">로그아웃</button>
+      </nav>
+
+      <div class="container-fluid">
+      <div style="padding:20px;"> 
+        <br> <br>
+        <form name="form">
+        <div class="form-group">
+          <div class="card">
+            <div class="card-header">
+            문화상품권 자동충전 관련
+            </div>
+            <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6" style="padding-top : 10px;">
+                      <label for="exampleInputEmail1">컬쳐랜드 ID</label>
+                      <input class="form-control" id="cultureid" placeholder="컬쳐랜드 ID" name="cultureid" value="{{info[3]}}">
+                    </div>
+                    <div class="col-md-6" style="padding-top : 10px;">
+                      <label for="exampleInputEmail1">컬쳐랜드 PW</label>
+                      <input class="form-control" id="culturepw" placeholder="컬쳐랜드 PW" name="culturepw" value="{{info[4]}}">
+                    </div>
+                    <div class="col-md-6" style="padding-top : 10px;">
+                      <label for="exampleInputEmail1">충전 수수료 (1~100%)</label>
+                      <input class="form-control" id="fee" placeholder="충전 수수료 (1~100%)" type="number" min="0" max="100" name="fee" value="{{info[12]}}"> 
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="card">
+              <div class="card-header">
+              로그 관련
+              </div>
+              <div class="card-body">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-md-6" style="padding-top : 10px;">
+                        <label for="exampleInputEmail1">관리자 로그 웹훅</label>
+                        <input class="form-control" id="logwebhk" placeholder="관리자 로그 웹훅" name="logwebhk" value="{{info[7]}}"> 
+                      </div>
+                      <div class="col-md-6" style="padding-top : 10px;">
+                        <label for="exampleInputEmail1">구매 로그 웹훅</label>
+                        <input class="form-control" id="buylogwebhk" placeholder="구매 로그 웹훅" name="buylogwebhk" value="{{info[8]}}"> 
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+
+      <div class="form-group">
+        <div class="card">
+            <div class="card-header">
+            계좌 관련
+            </div>
+            <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6" style="padding-top : 10px;">
+                      <label for="exampleInputEmail1">은행이름</label>
+                      <input class="form-control" id="bankname" placeholder="은행 이름(예: 국민은행)" name="bankname" value="{{bank.get('bankname','')}}"> 
+                    </div>
+                    <div class="col-md-6" style="padding-top : 10px;">
+                      <label for="exampleInputEmail1">계좌번호</label>
+                      <input class="form-control" id="banknum" placeholder="계좌번호" name="banknum" value="{{bank.get('banknum','')}}"> 
+                    </div>
+                    <div class="col-md-6" style="padding-top : 10px;">
+                      <label for="exampleInputEmail1">예금주</label>
+                      <input class="form-control" id="bankowner" placeholder="예금주" name="bankowner" value="{{bank.get('bankowner','')}}"> 
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+
+      <div class="form-group">
+        <div class="card">
+            <div class="card-header">
+            역할 관련
+            </div>
+            <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12" style="padding-top : 10px;">
+                      <label for="exampleInputEmail1">구매자 역할 ID</label>
+                      <input class="form-control" id="roleid" placeholder="구매자 역할 ID" name="roleid" value="{{info[6]}}"> 
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+  
+        <div class="form-group">
+            <div class="card">
+                <div class="card-header">
+                일반 설정
+                </div>
+                <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6" style="padding-top : 10px;">
+                          <label for="exampleInputEmail1">가입하기 채널 ID</label>
+                          <input class="form-control" id="joinch" placeholder="가입하기 채널 ID" name="joinch" value="{{info[1]}}"> 
+                        </div>
+                        <div class="col-md-6" style="padding-top : 10px;">
+                          <label for="exampleInputEmail1">유저정보 채널 ID</label>
+                          <input class="form-control" id="infoch" placeholder="유저정보 채널 ID" name="infoch" value="{{info[9]}}"> 
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6" style="padding-top : 10px;">
+                        <label for="exampleInputEmail1">충전신청 채널 ID</label>
+                        <input class="form-control" id="chargech" placeholder="충전신청 채널 ID" name="chargech" value="{{info[10]}}"> 
+                      </div>
+                      <div class="col-md-6" style="padding-top : 10px;">
+                        <label for="exampleInputEmail1">구매하기 채널 ID</label>
+                        <input class="form-control" id="buych" placeholder="구매하기 채널 ID" name="buych" value="{{info[11]}}"> 
+                      </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </form>
+      <div style="float: right;">
+      <button class="btn btn-primary" onclick="manage();">적용하기</button>&nbsp;&nbsp;
+        <button class="btn btn-danger" onclick="cancel_button();">취소하기</button><br><br>
+        </div>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>

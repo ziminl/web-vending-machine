@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link href="{{ url_for('static', filename='css/simple-sidebar.css') }}" rel="stylesheet">
+
+  <script>
+            function logout_button() {
+            Swal.fire({
+                title: '로그아웃', /*상단 타이틀*/
+                text: '정말로 로그아웃하시겠습니까?', /*내용*/
+                icon: 'success', /*아이콘 타입*/
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonColor: '#009900',
+                confirmButtonText: '확인', /*확인버튼 클가*/
+                cancelButtonText: '취소'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = '/logout';
+              }
+            })
+          }
+
+          function manage(){
+            if (form.code.value == ""){
+                Swal.fire(
+                '라이센스 등록 실패',
+                '라이센스를 입력해주세요.',
+                'error'
+                );
+            }else{
+              Swal.fire({
+                  title: '라이센스 등록',
+                  text: "라이센스를 등록하시겠습니까?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  cancelButtonColor: '#d33',
+                  confirmButtonColor: '#009900'
+                  }).then((result) => {
+                      if (result.isConfirmed){
+                          $.ajax({
+                              url: "/license",
+                              type: "post",
+                              data: $("form").serialize(),
+                          }).done(function(data) {
+                              if ($.isNumeric(data)){
+                                Swal.fire(
+                                  '라이센스 등록 성공',
+                                  `등록된 라이센스 기간: ${data}일`,
+                                  'success'
+                                  );
+                              }else{
+                                  Swal.fire(
+                                  '라이센스 등록 실패',
+                                  data,
+                                  'error'
+                                  );
+                              }
+                          });
+                      }
+                  })
+            }
+        }
+
+  </script>
+
+  <title>Sky VEND βetq</title>
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Sky VEND βetq</div>
+      <div class="list-group list-group-flush">
+        <a href="/setting" class="list-group-item list-group-item-action bg-light">기본 설정</a>
+        <a href="/manageuser" class="list-group-item list-group-item-action bg-light">유저 관리</a>
+        <a href="/manageprod" class="list-group-item list-group-item-action bg-light">제품 관리</a>
+        <b><a href="/license" class="list-group-item list-group-item-action bg-light">라이센스 관리</a></b>
+        <b><a href="https://discord.gg/RMWNHEDmGD" class="btn btn-primary btn-block">Sky VEND βetq 디스코드</a></b>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">메뉴</button>&nbsp;&nbsp;
+        <button class="btn btn-danger" onclick="logout_button();">로그아웃</button>
+        <button class='btn btn-primary' onclick='location.href="../login"'>홈으로 돌아가기</button>&nbsp;&nbsp;
+      </nav>
+
+      <div class="container-fluid">
+      <div style="padding:20px;"> 
+        <br> <br>
+        <form name="form">
+        <div class="form-group">
+          <h2>남은 라이센스 기간<br>{{expire}}</h2><br>
+          <div class="card">
+            <div class="card-header">
+            라이센스 등록
+            </div>
+            <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                      <input class="form-control" id="code" placeholder="라이센스 코드" name="code">
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div style="float: right;">
+      <button class="btn btn-primary" onclick="manage();">라이센스 코드 등록</button>&nbsp;&nbsp;
+      </div>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>

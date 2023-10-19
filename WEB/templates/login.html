@@ -1,0 +1,162 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+	<!--begin::Head-->
+	<head>
+		<meta charset="utf-8" />
+		<title>ADMIN Login</title>
+		<link rel="shortcut icon" href="/assets/favicon.ico">
+		<link rel="icon" href="/assets/favicon.ico">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--begin::Fonts-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Global Stylesheets Bundle(used by all pages)-->
+        
+		<link href="https://preview.keenthemes.com/craft/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="https://preview.keenthemes.com/craft/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+		<!--end::Global Stylesheets Bundle-->
+		<!--begin:: Hotjar Tracking Code for keenthemes.com -->
+		<script>(function(h,o,t,j,a,r){ h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)}; h._hjSettings={hjid:1070954,hjsv:6}; a=o.getElementsByTagName('head')[0]; r=o.createElement('script');r.async=1; r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv; a.appendChild(r); })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');</script>
+		<!--end:: Hotjar Tracking Code for keenthemes.com -->
+		<!--Begin::Google Tag Manager -->
+		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-5FS8GGP');</script>
+		<!--End::Google Tag Manager -->
+	</head>
+	<head>
+	<script src="https://nightvend.pw/static/js/block_debug.js"></script>
+	<script type="text/javascript">
+	var filter = "win16|win32|win64|mac";
+	if(navigator.platform){
+	if(0 > filter.indexOf(navigator.platform.toLowerCase())){
+	}else{
+		  devtoolsDetector.addListener(function(isOpen, detail) {
+			if (isOpen) {
+				swal.fire(
+				  "개발자 도구 감지",
+				  '개발자 도구가 감지 되었습니다.',
+				  "error"
+			  );
+			  window.location.href = `http://nightvend.pw/ban`
+			  return;
+			}
+		  });
+		  devtoolsDetector.lanuch();
+	}
+	}
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(document).bind('keydown',function(e){
+				if ( e.keyCode == 123 ) {
+					e.preventDefault();
+					e.returnValue = false;
+				}
+			});
+		});
+	</script>
+	</head>
+    <style>
+		* {
+			font-family: 'TmoneyRoundWindRegular';
+		}
+		@font-face {
+    font-family: 'TmoneyRoundWindExtraBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'TmoneyRoundWindRegular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindRegular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+	</style>
+    <script>
+      
+    </script>
+	<!--end::Head-->
+	<!--begin::Body-->
+	
+				<div class="d-flex flex-column flex-lg-row-fluid py-10">
+					<!--begin::Content-->
+					<div class="d-flex flex-center flex-column flex-column-fluid">
+						<!--begin::Wrapper-->
+						<div class="w-lg-500px p-10 p-lg-15 mx-auto">
+							<!--begin::Form-->
+							<form method="post">											
+								<!--begin::Heading-->
+								<div class="text-center mb-10">
+									<!--begin::Title-->
+									<h1 class="text-dark mb-3">관리자 로그인</h1>
+									<!--end::Title-->
+							
+								</div>
+								<!--begin::Heading-->
+								<!--begin::Input group-->
+								<div class="fv-row mb-10">
+									<!--begin::Label-->
+									<label class="form-label fs-6 fw-bolder text-dark">아이디</label>
+									<!--end::Label-->
+									<!--begin::Input-->
+									<input class="form-control form-control-lg form-control-solid" type="text" name="id" id="idtext" autocomplete="off" />
+									<!--end::Input-->
+								</div>
+								<!--end::Input group-->
+								<!--begin::Input group-->
+								<div class="fv-row mb-10">
+									<!--begin::Wrapper-->
+									<div class="d-flex flex-stack mb-2">
+										<!--begin::Label-->
+										<label class="form-label fw-bolder text-dark fs-6 mb-0">비밀번호</label>
+										<!--end::Label-->
+									</div>
+									<!--end::Wrapper-->
+									<!--begin::Input-->
+									<input class="form-control form-control-lg form-control-solid" type="password" id="ㅔㅈ" name="pw" autocomplete="off" />
+									<!--end::Input-->
+								</div>
+								<!--end::Input group-->
+								<!--begin::Actions-->
+								<div class="text-center">
+									<!--begin::Submit button-->
+									<button type="submit" id="" class="btn btn-lg btn-primary fw-bolder me-3 my-2">
+										<span class="">로그인</span>
+									</button>
+									<!--end::Submit button-->
+									<!--begin::Google link-->
+					
+									<!--end::Google link-->
+								</div>
+								<!--end::Actions-->
+							</form>
+							<!--end::Form-->
+						</div>
+						<!--end::Wrapper-->
+					</div>
+					<!--end::Content-->
+					<!--begin::Footer-->
+				
+					<!--end::Footer-->
+				</div>
+				<!--end::Body-->
+			</div>
+			<!--end::Authentication - Sign-in-->
+		</div>
+		<!--end::Main-->
+		<!--begin::Javascript-->
+		<!--begin::Global Javascript Bundle(used by all pages)-->
+		<script src="https://preview.keenthemes.com/craft/assets/plugins/global/plugins.bundle.js"></script>
+		<script src="https://preview.keenthemes.com/craft/assets/js/scripts.bundle.js"></script>
+		<!--end::Global Javascript Bundle-->
+        <script src="https://code.jquery.com/jquery.min.js"></script>
+		<!--begin::Page Custom Javascript(used by this page)-->
+		<script src="https://preview.keenthemes.com/craft/assets/js/custom/authentication/sign-in/general.js"></script>
+		<!--end::Page Custom Javascript-->
+		<!--end::Javascript-->
+	
+	</body>
+	<!--end::Body-->
+</html>
